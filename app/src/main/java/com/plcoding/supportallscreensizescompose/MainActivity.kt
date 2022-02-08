@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,30 +25,68 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             SupportAllScreenSizesComposeTheme {
-                LazyColumn(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-                    // List 1
-                    items(10) {
-                        Text(
-                            text = "Item $it",
-                            fontSize = 25.sp,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.Cyan)
-                                .padding(16.dp)
-                        )
+                val windowInfo = rememberWindowInfo()
+                if(windowInfo.screenWidthInfo is WindowInfo.WindowType.Compact) {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize()
+                    ) {
+                        // List 1
+                        items(10) {
+                            Text(
+                                text = "Item $it",
+                                fontSize = 25.sp,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Cyan)
+                                    .padding(16.dp)
+                            )
+                        }
+                        // List 2
+                        items(10) {
+                            Text(
+                                text = "Item $it",
+                                fontSize = 25.sp,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .background(Color.Green)
+                                    .padding(16.dp)
+                            )
+                        }
                     }
-                    // List 2
-                    items(10) {
-                        Text(
-                            text = "Item $it",
-                            fontSize = 25.sp,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .background(Color.Green)
-                                .padding(16.dp)
-                        )
+                } else {
+                    Row(
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        LazyColumn(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            // List 1
+                            items(10) {
+                                Text(
+                                    text = "Item $it",
+                                    fontSize = 25.sp,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(Color.Green)
+                                        .padding(16.dp)
+                                )
+                            }
+                        }
+                        LazyColumn(
+                            modifier = Modifier.weight(1f)
+                        ) {
+                            // List 1
+                            items(10) {
+                                Text(
+                                    text = "Item $it",
+                                    fontSize = 25.sp,
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .background(Color.Cyan)
+                                        .padding(16.dp)
+                                )
+                            }
+                        }
                     }
                 }
             }
